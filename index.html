@@ -14,19 +14,17 @@
             <h1 class="col-12 bg-primary bg-gradient text-white text-center fs-1 fw-bold">Weather Dashboard</h1>
         </header>
         <main class="row">
-            <div class="col-12 col-md-3">
+            <form class="col-12 col-md-3" id="search-form">
                     <label for="city" class="form-label fs-2 fw-bold m-1">Search for a City:</label>
                 <div class="d-grid gap-2 m-1 mb-3">
-                    <input name="city" type="text" class="form-input form-control-lg" placeholder="Los Angeles">
+                    <input name="city" type="text" class="form-input form-control-lg" id="city-input" placeholder="Los Angeles">
                 </div>
                 <div class="d-grid gap-2 m-1 mb-3">
                     <button type="submit" class="d-block btn btn-primary">Search</button>
                 </div>
                 <hr>
-            
-
             </form>
-            <div class="result-container col-12 col-md-10">
+            <div class="col-12 col-md-10"  id="result-container">
 
             </div>
             
