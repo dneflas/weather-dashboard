@@ -1,5 +1,3 @@
-var searchContainer = document.getElementById("search-container");
-var resultContainer = document.getElementById("result-container");
 var currentWeatherEl = document.querySelector("#current-weather");
 var fiveDayForcastEl = document.querySelector("#five-day-forcast");
 var userFormEl = document.querySelector("#search-form");
@@ -12,8 +10,14 @@ var LoadRecentSearches = function(){
 
     if(recentStoredSearches) {
         recentSearches = recentStoredSearches;
-        for (var i = 0; i < recentSearches.length; i++){
-            addRecent(recentSearches[i]);
+        if (recentSearches.length < 10){
+            for (var i = 0; i < recentSearches.length; i++){
+                addRecent(recentSearches[i]);
+            };
+        } else {
+            for (var i = (recentSearches.length - 10); i < recentSearches.length; i++){
+                addRecent(recentSearches[i]);
+            };
         };
     };
 };
@@ -32,12 +36,11 @@ var formSubmitHandler = function(event){
         addRecent(cityInput);
     } else {
         alert("Please enter a valid city");
-    }
-
+    };
 };
 
 var getGeoCode = function(city){
-    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city +"&appid=81899826dc7664a048a837db5523dd36"
+    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=81899826dc7664a048a837db5523dd36"
 
     currentWeatherEl.innerHTML = "";
     fiveDayForcastEl.innerHTML = "";
@@ -46,12 +49,15 @@ var getGeoCode = function(city){
         .then(function(response){
             if (response.ok){
                 response.json().then(function(data){
-                    console.log(response)
-                   var lat = data[0].lat;
-                   var lon = data[0].lon;
-                   pushRecent(city);
-
-                   getWeather(lat, lon, city);
+                    console.log(data)
+                    if (data.length === 0){
+                        alert("Error: City Not Found");
+                    } else {
+                        var lat = data[0].lat;
+                        var lon = data[0].lon;
+                        pushRecent(city);
+                        getWeather(lat, lon, city);
+                    };
                 });
             } else {
                 alert("Error: City Not Found");
@@ -64,13 +70,10 @@ var getGeoCode = function(city){
 };
 
 var getWeather = function(lat, lon, city){
-
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=81899826dc7664a048a837db5523dd36";
-    console.log(apiUrl);
     fetch(apiUrl)
         .then(function(response){
             response.json().then(function(data){
-
                 // generate display for current weather
                 var currentDate = document.createElement("h3");
                 currentDate.className= "fs-2 fw-bold";
@@ -120,22 +123,15 @@ var getWeather = function(lat, lon, city){
                     forecastCardBody.append(dailyDate, dailyIcon, dailyTemp, dailyHumidity, dailyWindSpeed, dailyUvi)
                     forecastCardEl.append(forecastCardBody);
                     fiveDayForcastEl.append(forecastCardEl);
-                }
-            
+                };
             });
         });
 };
-
-
-var displayWeather = function(){
-    
-}
 
 var addRecent = function(city){
     var recentSearchItem = document.createElement("button");
     recentSearchItem.className = "recent-search-item d-block btn btn-secondary"
     recentSearchItem.textContent = capitalFirstLetter(city);
-
     recentSearchesEl.prepend(recentSearchItem);
 };
 
@@ -150,14 +146,15 @@ var capitalFirstLetter = function(city){
 
     for (var i = 0; i < arr.length; i++){
         arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-    }
+    };
+
     var upperCaseCity = arr.join(" ");
     return upperCaseCity;
-    }
+};
 
 LoadRecentSearches();
 userFormEl.addEventListener("submit", formSubmitHandler);
 recentSearchesEl.addEventListener("click", function(event){
     var city = event.target.textContent;
     getGeoCode(city);
-})
+});
