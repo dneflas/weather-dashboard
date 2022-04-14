@@ -66,9 +66,10 @@ var getWeather = function(lat, lon, city){
         .then(function(response){
             response.json().then(function(data){
 
+                // generate display for current weather
                 var currentDate = document.createElement("h3");
                 currentDate.className= "fs-2 fw-bold";
-                currentDate.textContent = city + " - " + new Date(data.current.dt*1000).toLocaleDateString("en-US");
+                currentDate.textContent = capitalFirstLetter(city) + " - " + new Date(data.current.dt*1000).toLocaleDateString("en-US");
                 var currentIcon = document.createElement("img");
                 currentIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
                 var currentTemp = document.createElement("p");
@@ -89,7 +90,8 @@ var getWeather = function(lat, lon, city){
                 currentCardBody.append(currentDate, currentIcon, currentTemp, currentHumidity, currentWindSpeed, currentUvi)
                 currentCardEl.append(currentCardBody);
                 currentWeatherEl.append(currentCardEl);
-
+                
+                // generate display for 5 day forcast
                 for (var i = 1; i < 6; i++){
                     var dailyDate = document.createElement("h4");
                     dailyDate.textContent = new Date(data.daily[i].dt*1000).toLocaleDateString("en-US");
@@ -127,7 +129,7 @@ var displayWeather = function(){
 var addRecent = function(city){
     var recentSearchItem = document.createElement("button");
     recentSearchItem.className = "recent-search-item d-block btn btn-secondary"
-    recentSearchItem.textContent = city
+    recentSearchItem.textContent = capitalFirstLetter(city);
 
     recentSearchesEl.prepend(recentSearchItem);
 };
@@ -135,9 +137,18 @@ var addRecent = function(city){
 var pushRecent = function(city){
     recentSearches.push(city);
     localStorage.setItem("recentStoredSearches", JSON.stringify(recentSearches));
-
-
 }
+
+var capitalFirstLetter = function(city){
+    var lowerCaseCity = city;
+    var arr = lowerCaseCity.split(" ");
+
+    for (var i = 0; i < arr.length; i++){
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+    }
+    var upperCaseCity = arr.join(" ");
+    return upperCaseCity;
+    }
 
 
 LoadRecentSearches();
