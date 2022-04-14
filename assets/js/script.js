@@ -24,7 +24,8 @@ var formSubmitHandler = function(event){
     var cityInput = cityInputEl.value.
     trim()
     .toLowerCase()
-    // cityInput = "";
+
+    cityInputEl.value = "";
 
     if (cityInput){
         getGeoCode(cityInput);
@@ -37,6 +38,9 @@ var formSubmitHandler = function(event){
 
 var getGeoCode = function(city){
     var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city +"&appid=81899826dc7664a048a837db5523dd36"
+
+    currentWeatherEl.innerHTML = "";
+    fiveDayForcastEl.innerHTML = "";
 
     fetch(geoCodeUrl)
         .then(function(response){
@@ -60,6 +64,7 @@ var getGeoCode = function(city){
 };
 
 var getWeather = function(lat, lon, city){
+
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=81899826dc7664a048a837db5523dd36";
     console.log(apiUrl);
     fetch(apiUrl)
@@ -150,6 +155,9 @@ var capitalFirstLetter = function(city){
     return upperCaseCity;
     }
 
-
 LoadRecentSearches();
 userFormEl.addEventListener("submit", formSubmitHandler);
+recentSearchesEl.addEventListener("click", function(event){
+    var city = event.target.textContent;
+    getGeoCode(city);
+})
