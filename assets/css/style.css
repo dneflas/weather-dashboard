@@ -1,3 +1,7 @@
+.card-body {
+    padding: 1rem 0.5rem;
+}
+
 #forecast-title {
 padding:20px 10px 10px;
 }

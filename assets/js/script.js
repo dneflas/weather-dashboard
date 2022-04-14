@@ -62,7 +62,6 @@ var getGeoCode = function(city){
             } else {
                 alert("Error: City Not Found");
             };
-        
          })
          .catch(function(error){
              alert("Unable to connect to server")
@@ -86,8 +85,21 @@ var getWeather = function(lat, lon, city){
                 currentHumidity.textContent = "Humidity: " + data.current.humidity + "%";
                 var currentWindSpeed = document.createElement("p");
                 currentWindSpeed.textContent = "Wind: " + data.current.wind_speed + "MPH";
-                var currentUvi = document.createElement("p");
-                currentUvi.textContent = "UV Index: " + data.current.uvi;
+                var currentUviEl = document.createElement("p");
+                currentUviEl.textContent = "UV Index: " 
+                var currentUvi = data.current.uvi;
+                var uviColor = document.createElement("span");
+                uviColor.textContent = currentUvi;
+
+                if(currentUvi < 3) {
+                    uviColor.className = "px-2 text-white bg-success rounded";
+                } else if (currentUvi < 6) {
+                    uviColor.className =" px-2 text-white bg-warning rounded";
+                } else {
+                    uviColor.className = "px-2 text-white bg-danger rounded";
+                };
+
+                currentUviEl.append(uviColor);
 
                 var currentCardEl = document.createElement("div");
                 currentCardEl.className = "card col-12";
@@ -95,7 +107,7 @@ var getWeather = function(lat, lon, city){
                 var currentCardBody = document.createElement("div");
                 currentCardBody.className = "card-body";
 
-                currentCardBody.append(currentDate, currentIcon, currentTemp, currentHumidity, currentWindSpeed, currentUvi)
+                currentCardBody.append(currentDate, currentIcon, currentTemp, currentHumidity, currentWindSpeed, currentUviEl)
                 currentCardEl.append(currentCardBody);
                 currentWeatherEl.append(currentCardEl);
                 
@@ -111,8 +123,6 @@ var getWeather = function(lat, lon, city){
                     dailyHumidity.textContent = "Humidity: " + data.daily[i].humidity + "%";
                     var dailyWindSpeed = document.createElement("p");
                     dailyWindSpeed.textContent = "Wind: " + data.daily[i].wind_speed + "MPH";
-                    var dailyUvi = document.createElement("p");
-                    dailyUvi.textContent = "UV Index: " + data.daily[i].uvi;
                 
                     var forecastCardEl = document.createElement("div");
                     forecastCardEl.className = "card col-md-5 col-lg-2";
@@ -120,7 +130,7 @@ var getWeather = function(lat, lon, city){
                     var forecastCardBody =document.createElement("div");
                     forecastCardBody.className = "card-body";
 
-                    forecastCardBody.append(dailyDate, dailyIcon, dailyTemp, dailyHumidity, dailyWindSpeed, dailyUvi)
+                    forecastCardBody.append(dailyDate, dailyIcon, dailyTemp, dailyHumidity, dailyWindSpeed)
                     forecastCardEl.append(forecastCardBody);
                     fiveDayForcastEl.append(forecastCardEl);
                 };
@@ -138,7 +148,7 @@ var addRecent = function(city){
 var pushRecent = function(city){
     recentSearches.push(city);
     localStorage.setItem("recentStoredSearches", JSON.stringify(recentSearches));
-}
+};
 
 var capitalFirstLetter = function(city){
     var lowerCaseCity = city;
