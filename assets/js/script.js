@@ -40,7 +40,7 @@ var formSubmitHandler = function(event){
 };
 
 var getGeoCode = function(city){
-    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=81899826dc7664a048a837db5523dd36"
+    var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=81899826dc7664a048a837db5523dd36"
 
     currentWeatherEl.innerHTML = "";
     fiveDayForcastEl.innerHTML = "";
@@ -73,6 +73,7 @@ var getWeather = function(lat, lon, city){
     fetch(apiUrl)
         .then(function(response){
             response.json().then(function(data){
+                console.log(data);
                 // generate display for current weather
                 var currentDate = document.createElement("h3");
                 currentDate.className= "fs-2 fw-bold";
