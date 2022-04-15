@@ -3,6 +3,7 @@ var fiveDayForcastEl = document.querySelector("#five-day-forcast");
 var userFormEl = document.querySelector("#search-form");
 var cityInputEl = document.querySelector("#city-input");
 var recentSearchesEl = document.querySelector("#recent-searches")
+var apiKey = "2dd5a552df930fa5fc39fbfc07643b28";
 var recentSearches = [];
 
 var LoadRecentSearches = function(){
@@ -40,8 +41,8 @@ var formSubmitHandler = function(event){
 };
 
 var getGeoCode = function(city){
-    var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=81899826dc7664a048a837db5523dd36"
-
+    var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
+    console.log(geoCodeUrl);
     currentWeatherEl.innerHTML = "";
     fiveDayForcastEl.innerHTML = "";
 
@@ -69,7 +70,7 @@ var getGeoCode = function(city){
 };
 
 var getWeather = function(lat, lon, city){
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=81899826dc7664a048a837db5523dd36";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey;
     fetch(apiUrl)
         .then(function(response){
             response.json().then(function(data){
