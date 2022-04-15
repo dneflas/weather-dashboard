@@ -80,7 +80,7 @@ var getWeather = function(lat, lon, city){
                 currentDate.className= "fs-2 fw-bold";
                 currentDate.textContent = capitalFirstLetter(city) + " - " + new Date(data.current.dt*1000).toLocaleDateString("en-US");
                 var currentIcon = document.createElement("img");
-                currentIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
+                currentIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png");
                 var currentTemp = document.createElement("p");
                 currentTemp.textContent = "Temp: " + data.current.temp + "°F";
                 var currentHumidity = document.createElement("p");
