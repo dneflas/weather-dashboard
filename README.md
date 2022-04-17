@@ -11,7 +11,7 @@ The Weather Dashboard application allows users to see the current and future wea
 - OpenWeather One Call API 1.0
 
 ## Screenshot
-![Screenshot of Weather Dashboard application.](.)
+![Screenshot of Weather Dashboard application.](./images/image-1.png)
 
 ## Link
 https://dneflas.github.io/weather-dashboard/
