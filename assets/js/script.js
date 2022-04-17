@@ -42,7 +42,6 @@ var formSubmitHandler = function(event){
 
 var getGeoCode = function(city){
     var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
-    console.log(geoCodeUrl);
     currentWeatherEl.innerHTML = "";
     fiveDayForcastEl.innerHTML = "";
 
@@ -50,7 +49,6 @@ var getGeoCode = function(city){
         .then(function(response){
             if (response.ok){
                 response.json().then(function(data){
-                    console.log(data)
                     if (data.length === 0){
                         alert("Error: City Not Found");
                     } else {
@@ -74,7 +72,6 @@ var getWeather = function(lat, lon, city){
     fetch(apiUrl)
         .then(function(response){
             response.json().then(function(data){
-                console.log(data);
                 // generate display for current weather
                 var currentDate = document.createElement("h3");
                 currentDate.className= "fs-2 fw-bold";
