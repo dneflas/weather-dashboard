@@ -115,7 +115,7 @@ var getWeather = function(lat, lon, city){
                     var dailyDate = document.createElement("h4");
                     dailyDate.textContent = new Date(data.daily[i].dt*1000).toLocaleDateString("en-US");
                     var dailyIcon = document.createElement("img");
-                    dailyIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png")
+                    dailyIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png")
                     var dailyTemp = document.createElement("p");
                     dailyTemp.textContent = "Temp: " + data.daily[i].temp.day + "°F";
                     var dailyHumidity = document.createElement("p");
